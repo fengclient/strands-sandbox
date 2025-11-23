@@ -1,6 +1,13 @@
 """
 Code Interpreter Tool implementation using Strands @tool decorator.
 
+NOTE: This file is sourced from strands_tools.code_interpreter.code_interpreter
+      We maintain a local copy to avoid AWS Bedrock dependencies that are
+      automatically imported by the official package's __init__.py
+
+Source: strands_tools==0.x.x (check e2bvenv for exact version)
+License: Same as strands_tools package
+
 This module contains the base tool class that provides lifecycle management
 and can be extended by specific platform implementations.
 """

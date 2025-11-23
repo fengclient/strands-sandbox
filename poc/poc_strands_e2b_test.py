@@ -1,14 +1,14 @@
 """
-Strands Agent 调用 E2B Code Interpreter 测试
+Strands Agent with E2B Code Interpreter Test
 
-验证 Strands Agent 可以正确调用 E2B Code Interpreter 工具
+Verify that Strands Agent can correctly invoke E2B Code Interpreter tool
 """
 
 import os
 import sys
 from dotenv import load_dotenv
 
-# 加载环境变量
+# Load environment variables
 load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
@@ -18,9 +18,9 @@ from strands.models.openai import OpenAIModel
 from strands_sandbox import E2BCodeInterpreter
 
 
-# 创建模型实例
+# Create model instance
 def get_model():
-    """获取配置好的模型实例"""
+    """Get configured model instance"""
     return OpenAIModel(
         client_args={
             "api_key": os.getenv("OPENAI_API_KEY"),
@@ -35,35 +35,35 @@ def get_model():
 
 
 def test_agent_basic_code_execution():
-    """测试 1: Agent 基础代码执行"""
+    """Test 1: Agent Basic Code Execution"""
     print("\n" + "=" * 60)
-    print("测试 1: Agent 基础代码执行")
+    print("Test 1: Agent Basic Code Execution")
     print("=" * 60)
     
-    # 创建 E2B Code Interpreter
+    # Create E2B Code Interpreter
     api_key = os.getenv("E2B_API_KEY")
     e2b_interpreter = E2BCodeInterpreter(api_key=api_key)
     
-    # 创建 Agent
+    # Create Agent
     agent = Agent(
         name="CodeExecutor",
-        system_prompt="你是一个代码执行助手，可以帮助用户执行 Python 代码。",
+        system_prompt="You are a code execution assistant that can help users execute Python code.",
         tools=[e2b_interpreter.code_interpreter],
         model=get_model()
     )
     
-    # 测试执行
-    print("\n请求: 执行 Python 代码计算 2+2")
-    response = agent("请执行 Python 代码: print('Hello from Agent!'); 2 + 2")
+    # Test execution
+    print("\nRequest: Execute Python code to calculate 2+2")
+    response = agent("Please execute Python code: print('Hello from Agent!'); 2 + 2")
     
-    print(f"\nAgent 响应: {response.message['content'][0]['text']}")
+    print(f"\nAgent Response: {response.message['content'][0]['text']}")
     return True
 
 
 def test_agent_data_analysis():
-    """测试 2: Agent 数据分析"""
+    """Test 2: Agent Data Analysis"""
     print("\n" + "=" * 60)
-    print("测试 2: Agent 数据分析")
+    print("Test 2: Agent Data Analysis")
     print("=" * 60)
     
     api_key = os.getenv("E2B_API_KEY")
@@ -71,29 +71,29 @@ def test_agent_data_analysis():
     
     agent = Agent(
         name="DataAnalyst",
-        system_prompt="你是一个数据分析师，可以使用 Python 进行数据分析。",
+        system_prompt="You are a data analyst who can perform data analysis using Python.",
         tools=[e2b_interpreter.code_interpreter],
         model=get_model()
     )
     
-    print("\n请求: 创建一个数据集并计算平均值")
+    print("\nRequest: Create a dataset and calculate averages")
     response = agent("""
-请使用 pandas 创建一个包含以下数据的 DataFrame：
-- 姓名: Alice, Bob, Charlie
-- 年龄: 25, 30, 35
-- 分数: 85, 90, 88
+Please use pandas to create a DataFrame with the following data:
+- Name: Alice, Bob, Charlie
+- Age: 25, 30, 35
+- Score: 85, 90, 88
 
-然后计算平均年龄和平均分数。
+Then calculate the average age and average score.
 """)
     
-    print(f"\nAgent 响应: {response.message['content'][0]['text']}")
+    print(f"\nAgent Response: {response.message['content'][0]['text']}")
     return True
 
 
 def test_agent_multi_language():
-    """测试 3: Agent 多语言支持"""
+    """Test 3: Agent Multi-Language Support"""
     print("\n" + "=" * 60)
-    print("测试 3: Agent 多语言支持")
+    print("Test 3: Agent Multi-Language Support")
     print("=" * 60)
     
     api_key = os.getenv("E2B_API_KEY")
@@ -101,25 +101,25 @@ def test_agent_multi_language():
     
     agent = Agent(
         name="MultiLangExecutor",
-        system_prompt="你是一个多语言代码执行助手，支持 Python, JavaScript, TypeScript 等语言。",
+        system_prompt="You are a multi-language code execution assistant supporting Python, JavaScript, TypeScript, and more.",
         tools=[e2b_interpreter.code_interpreter],
         model=get_model()
     )
     
-    print("\n请求: 分别用 Python 和 JavaScript 计算 1 到 5 的平方和")
+    print("\nRequest: Calculate sum of squares from 1 to 5 in Python and JavaScript")
     response = agent("""
-请分别使用 Python 和 JavaScript 计算 1 到 5 的平方和。
-先用 Python，再用 JavaScript。
+Please calculate the sum of squares from 1 to 5 using both Python and JavaScript.
+First use Python, then JavaScript.
 """)
     
-    print(f"\nAgent 响应: {response.message['content'][0]['text']}")
+    print(f"\nAgent Response: {response.message['content'][0]['text']}")
     return True
 
 
 def test_agent_file_operations():
-    """测试 4: Agent 文件操作"""
+    """Test 4: Agent File Operations"""
     print("\n" + "=" * 60)
-    print("测试 4: Agent 文件操作")
+    print("Test 4: Agent File Operations")
     print("=" * 60)
     
     api_key = os.getenv("E2B_API_KEY")
@@ -127,25 +127,25 @@ def test_agent_file_operations():
     
     agent = Agent(
         name="FileManager",
-        system_prompt="你是一个文件管理助手，可以创建、读取和管理文件。",
+        system_prompt="You are a file management assistant that can create, read, and manage files.",
         tools=[e2b_interpreter.code_interpreter],
         model=get_model()
     )
     
-    print("\n请求: 创建一个文件并读取内容")
+    print("\nRequest: Create a file and read its content")
     response = agent("""
-请创建一个名为 'greeting.txt' 的文件，内容是 'Hello from Strands Agent!'，
-然后读取这个文件的内容。
+Please create a file named 'greeting.txt' with the content 'Hello from Strands Agent!',
+then read the content of this file.
 """)
     
-    print(f"\nAgent 响应: {response.message['content'][0]['text']}")
+    print(f"\nAgent Response: {response.message['content'][0]['text']}")
     return True
 
 
 def test_agent_session_persistence():
-    """测试 5: Agent 会话持久化"""
+    """Test 5: Agent Session Persistence"""
     print("\n" + "=" * 60)
-    print("测试 5: Agent 会话持久化")
+    print("Test 5: Agent Session Persistence")
     print("=" * 60)
     
     api_key = os.getenv("E2B_API_KEY")
@@ -153,26 +153,26 @@ def test_agent_session_persistence():
     
     agent = Agent(
         name="SessionManager",
-        system_prompt="你是一个会话管理助手，可以在多次交互中保持变量状态。",
+        system_prompt="You are a session management assistant that can maintain variable state across multiple interactions.",
         tools=[e2b_interpreter.code_interpreter],
         model=get_model()
     )
     
-    print("\n第一次请求: 定义变量")
-    response1 = agent("请定义一个变量 x = 100")
-    print(f"响应 1: {response1.message['content'][0]['text']}")
+    print("\nFirst Request: Define a variable")
+    response1 = agent("Please define a variable x = 100")
+    print(f"Response 1: {response1.message['content'][0]['text']}")
     
-    print("\n第二次请求: 使用之前定义的变量")
-    response2 = agent("请使用之前定义的变量 x，计算 x * 2")
-    print(f"响应 2: {response2.message['content'][0]['text']}")
+    print("\nSecond Request: Use the previously defined variable")
+    response2 = agent("Please use the previously defined variable x and calculate x * 2")
+    print(f"Response 2: {response2.message['content'][0]['text']}")
     
     return True
 
 
 def test_agent_error_handling():
-    """测试 6: Agent 错误处理"""
+    """Test 6: Agent Error Handling"""
     print("\n" + "=" * 60)
-    print("测试 6: Agent 错误处理")
+    print("Test 6: Agent Error Handling")
     print("=" * 60)
     
     api_key = os.getenv("E2B_API_KEY")
@@ -180,43 +180,43 @@ def test_agent_error_handling():
     
     agent = Agent(
         name="ErrorHandler",
-        system_prompt="你是一个代码执行助手，当代码出错时，你应该解释错误并提供修复建议。",
+        system_prompt="You are a code execution assistant. When code errors occur, you should explain the error and provide fix suggestions.",
         tools=[e2b_interpreter.code_interpreter],
         model=get_model()
     )
     
-    print("\n请求: 执行会出错的代码")
-    response = agent("请执行这段代码: result = 10 / 0")
+    print("\nRequest: Execute code that will cause an error")
+    response = agent("Please execute this code: result = 10 / 0")
     
-    print(f"\nAgent 响应: {response.message['content'][0]['text']}")
+    print(f"\nAgent Response: {response.message['content'][0]['text']}")
     return True
 
 
 def main():
-    """运行所有测试"""
+    """Run all tests"""
     print("\n" + "=" * 60)
-    print("Strands Agent + E2B Code Interpreter 测试")
+    print("Strands Agent + E2B Code Interpreter Tests")
     print("=" * 60)
     
-    # 检查必要的环境变量
+    # Check required environment variables
     if not os.getenv("E2B_API_KEY"):
-        print("\n❌ 错误: 请设置 E2B_API_KEY 环境变量")
+        print("\n❌ Error: Please set E2B_API_KEY environment variable")
         return
     
     if not os.getenv("OPENAI_API_KEY"):
-        print("\n❌ 错误: 请设置 OPENAI_API_KEY 环境变量")
+        print("\n❌ Error: Please set OPENAI_API_KEY environment variable")
         return
     
-    print(f"使用模型: {os.getenv('MODEL_NAME', 'default')}")
+    print(f"Using model: {os.getenv('MODEL_NAME', 'default')}")
     print(f"API Base URL: {os.getenv('OPENAI_BASE_URL', 'default')}")
     
     tests = [
-        ("Agent 基础代码执行", test_agent_basic_code_execution),
-        ("Agent 数据分析", test_agent_data_analysis),
-        ("Agent 多语言支持", test_agent_multi_language),
-        ("Agent 文件操作", test_agent_file_operations),
-        ("Agent 会话持久化", test_agent_session_persistence),
-        ("Agent 错误处理", test_agent_error_handling),
+        ("Agent Basic Code Execution", test_agent_basic_code_execution),
+        ("Agent Data Analysis", test_agent_data_analysis),
+        ("Agent Multi-Language Support", test_agent_multi_language),
+        ("Agent File Operations", test_agent_file_operations),
+        ("Agent Session Persistence", test_agent_session_persistence),
+        ("Agent Error Handling", test_agent_error_handling),
     ]
     
     results = []
@@ -225,14 +225,14 @@ def main():
             success = test_func()
             results.append((name, success))
         except Exception as e:
-            print(f"\n❌ 测试 '{name}' 异常: {e}")
+            print(f"\n❌ Test '{name}' exception: {e}")
             import traceback
             traceback.print_exc()
             results.append((name, False))
     
-    # 总结
+    # Summary
     print("\n" + "=" * 60)
-    print("测试总结")
+    print("Test Summary")
     print("=" * 60)
     
     for name, success in results:
@@ -241,7 +241,7 @@ def main():
     
     passed = sum(1 for _, success in results if success)
     total = len(results)
-    print(f"\n总计: {passed}/{total} 通过")
+    print(f"\nTotal: {passed}/{total} passed")
 
 
 if __name__ == "__main__":

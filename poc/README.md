@@ -1,64 +1,64 @@
-# POC 测试
+# POC Tests
 
-E2B Sandbox Implementation 的概念验证测试。
+Proof of concept tests for E2B Sandbox Implementation.
 
-## 文件说明
+## File Descriptions
 
-- **poc_e2b_fulltest.py** - E2B 完整测试（11个测试）
-- **poc_strands_e2b_test.py** - Strands Agent + E2B 集成测试（6个测试）✨
-- **poc_e2b_test.py** - 原始 E2B 测试示例
-- **e2b_scalebox_compatibility.md** - 兼容性文档
-- **.env** - 环境变量配置
+- **poc_e2b_fulltest.py** - E2B full test suite (11 tests)
+- **poc_strands_e2b_test.py** - Strands Agent + E2B integration tests (6 tests) ✨
+- **poc_e2b_test.py** - Original E2B test examples
+- **e2b_scalebox_compatibility.md** - Compatibility documentation
+- **.env** - Environment variable configuration
 
-## 运行测试
+## Running Tests
 
-### 1. E2B 完整测试
+### 1. E2B Full Test Suite
 
 ```bash
 python poc/poc_e2b_fulltest.py
 ```
 
-测试覆盖：
-- 基础代码执行
-- 文件操作
-- 命令执行
-- 会话管理
-- 错误处理
-- 6种语言（Python, JS, TS, R, Java, Bash）
+Test coverage:
+- Basic code execution
+- File operations
+- Command execution
+- Session management
+- Error handling
+- 6 languages (Python, JS, TS, R, Java, Bash)
 
-### 2. Strands Agent + E2B 集成测试 ✨
+### 2. Strands Agent + E2B Integration Tests ✨
 
 ```bash
 python poc/poc_strands_e2b_test.py
 ```
 
-测试覆盖：
-- Agent 基础代码执行
-- Agent 数据分析
-- Agent 多语言支持
-- Agent 文件操作
-- Agent 会话持久化
-- Agent 错误处理
+Test coverage:
+- Agent basic code execution
+- Agent data analysis
+- Agent multi-language support
+- Agent file operations
+- Agent session persistence
+- Agent error handling
 
-## 环境配置
+## Environment Configuration
 
-确保 `.env` 文件包含以下配置：
+Ensure your `.env` file contains the following configuration:
 
 ```bash
 # E2B API Key
 E2B_API_KEY=your-e2b-api-key
 
-# Strands Agent 配置（用于 Together AI）
-OPENAI_API_KEY=your-together-ai-key
-OPENAI_BASE_URL=https://api.together.xyz/v1
-MODEL_NAME=openai/gpt-oss-120b
+# Strands Agent Configuration
+OPENAI_API_KEY=your-openai-api-key
+OPENAI_BASE_URL=https://api.openai.com/v1
+MODEL_NAME=gpt-4
 TEMPERATURE=0.3
 MAX_TOKENS=4000
 ```
 
-## 测试结果
+## Test Results
 
-✅ 所有测试通过！
+✅ All tests passed!
 
-- E2B 完整测试：11/11 通过
-- Strands Agent 集成测试：6/6 通过
+- E2B full test suite: 11/11 passed
+- Strands Agent integration tests: 6/6 passed
